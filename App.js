@@ -14,7 +14,8 @@ import {
   Text,
   useColorScheme,
   View,
-  FlatList
+  FlatList,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 import {
@@ -42,6 +43,10 @@ const App = () => {
     setData(result)
   }
 
+  const actionOnRow = (item) => {
+    console.log('Selected Item :',item);
+  }
+
   useEffect( () => {
     getApiData()
   }, [])
@@ -54,7 +59,15 @@ const App = () => {
       />
       <FlatList
       data={data}
-      renderItem={({item}) => <Text style={{fontSize: 30}}>{item.name}</Text>}></FlatList>
+      renderItem={({item}) => 
+        <TouchableWithoutFeedback onPress={ () => actionOnRow(item)}>
+          <View>
+            <Text style={{fontSize: 30}}>
+              {item.name}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+      }></FlatList>
     </SafeAreaView>
   );
 }
